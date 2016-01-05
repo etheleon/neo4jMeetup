@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Visualising</title>
+  <title>Modelling graph data in Neo4j and visualising in R</title>
   <meta charset="utf-8">
-  <meta name="description" content="Visualising">
+  <meta name="description" content="Modelling graph data in Neo4j and visualising in R">
   <meta name="author" content="Wesley GOI">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -32,30 +32,94 @@
     <!-- LOGO SLIDE -->
         <slide class="title-slide segue nobackground">
   <hgroup class="auto-fadein">
-    <h1>Visualising</h1>
-    <h2>idk</h2>
-    <p>Wesley GOI<br/>PhD Candidate in Bioinformatics</p>
+    <h1>Modelling graph data in Neo4j and visualising in R</h1>
+    <h2>Using SHINY, HTMLWIDGETS, IGRAPH</h2>
+    <p>Wesley GOI<br/>Graph Enthusiast</p>
   </hgroup>
   <article></article>  
 </slide>
     
 
     <!-- SLIDES -->
-    <slide class="" id="slide-1" style="background:yellow;">
+    <slide class="" id="slide-1" style="background:;">
   <article data-timings="">
     <style>
 .title-slide {
-background-color: #FFF
+    background-color: #FFF
 }
 </style>
 
-<h2>Title</h2>
+<h2>Background</h2>
 
-<ol>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Outline</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
 <li>Edit YAML front matter</li>
 <li>Write using R Markdown</li>
 <li>Use an empty line followed by three dashes to separate slides!</li>
 </ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Why use NEO4J</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Why cypher</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Cypher</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Using RNeo4j</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">devtools::install_github(&quot;nicolewhite/RNeo4j&quot;)
+library(RNeo4j)
+</code></pre>
+
+<h2>Connecting to DB</h2>
+
+<pre><code class="r">graph &lt;- startGraph(&quot;http://metamaps.scelse.nus.edu.sg:7474/db/data/&quot;,
+            user = cred$user,
+            pass = cred$pass)
+</code></pre>
+
+<p>To disable authentication, change <code>dbms.security.auth_enabled</code> to <code>false</code> in <code>conf/neo4j-server.properties</code>.</p>
+
+<pre><code>dbms.security.auth_enabled=false
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -69,6 +133,36 @@ background-color: #FFF
       <a href="#" target="_self" rel='tooltip' 
         data-slide=1 title='NA'>
          1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Outline'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Why use NEO4J'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Why cypher'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Cypher'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Using RNeo4j'>
+         6
       </a>
     </li>
   </ul>

@@ -1,29 +1,97 @@
 ---
-title       : Visualising 
-subtitle    : idk
+title       : Modelling graph data in Neo4j and visualising in R
+subtitle    : Using SHINY, HTMLWIDGETS, IGRAPH
 author      : Wesley GOI
-job         : PhD Candidate in Bioinformatics
+job         : Graph Enthusiast
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 widgets     : []            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
---- bg:yellow
+---
 
 <style>
 .title-slide {
-background-color: #FFF
+    background-color: #FFF
 }
 </style>
 
-## Title
+## Background
+
+---
+## Outline
 
 1. Edit YAML front matter
 2. Write using R Markdown
 3. Use an empty line followed by three dashes to separate slides!
 
+---
 
+## Why use NEO4J
 
+---
+
+## Why cypher
+
+---
+
+## Cypher
+
+---
+
+## Using RNeo4j
+
+```{r cache=TRUE, warning=FALSE, message=FALSE}
+devtools::install_github("nicolewhite/RNeo4j")
+library(RNeo4j)
+```
+
+## Connecting to DB
+
+```{r echo=FALSE, eval=FALSE}
+library(digest)
+write.aes <- function(df, filename, key) {
+  zz <- textConnection("out","w")
+  write.csv(df,zz, row.names=F)
+  close(zz)
+  out <- paste(out,collapse="\n")
+  raw <- charToRaw(out)
+  raw <- c(raw,as.raw(rep(0,16-length(raw)%%16)))
+  aes <- AES(key,mode="ECB")
+  aes$encrypt(raw)
+  writeBin(aes$encrypt(raw), filename)  
+}
+key <- as.raw(sample(1:16, 16))
+aes <- AES(key, mode="ECB")
+save(key,file = "key.RData")
+credientials = data.frame(user = username, pass = password, stringAsFactors=F)
+write.aes(df = credentials, filename = "credentials.txt", key = key)
+```
+```{r readCredentials, echo=FALSE}
+load("key.RData")
+
+# read encypted data frame from file
+read.aes <- function(filename,key) {
+  dat <- readBin(filename,"raw",n=1000)
+  aes <- AES(key,mode="ECB")
+  raw <- aes$decrypt(dat, raw=TRUE)
+  txt <- rawToChar(raw[raw>0])
+  read.csv(text=txt, stringsAsFactors = F)
+}
+cred = read.aes("credentials.txt", key = key)
+```
+
+```{r connect}
+graph <- startGraph("http://metamaps.scelse.nus.edu.sg:7474/db/data/",
+            user = cred$user,
+            pass = cred$pass)
+```
+
+To disable authentication, change `dbms.security.auth_enabled` to `false` in `conf/neo4j-server.properties`.
+
+```
+dbms.security.auth_enabled=false
+```
 
 

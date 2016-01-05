@@ -51,6 +51,11 @@
 
 <h2>Background</h2>
 
+<ul>
+<li>Neo4j is a noSQL database which models its data as a graph</li>
+<li>latest version is 2.3.1</li>
+</ul>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -61,9 +66,10 @@
   </hgroup>
   <article data-timings="">
     <ol>
-<li>Edit YAML front matter</li>
-<li>Write using R Markdown</li>
-<li>Use an empty line followed by three dashes to separate slides!</li>
+<li>Using RNeo4j to connect with a hosted graphDB via Neo4j&#39;s REST API</li>
+<li>Executing cypher queries</li>
+<li>Using <code>IGRAPH</code> to plot and visualise data locally.</li>
+<li>Using <code>SHINY</code> and a <code>HTMLTOOLS</code> package <code>SIGMA</code> to interactively visualise graph data in a dashboard</li>
 </ol>
 
   </article>
@@ -75,7 +81,8 @@
     <h2>Why use NEO4J</h2>
   </hgroup>
   <article data-timings="">
-    
+    <p>REASON: THE CYPHER QUERY LANGUAGE</p>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -85,28 +92,30 @@
     <h2>Why cypher</h2>
   </hgroup>
   <article data-timings="">
-    
+    <p>comparison with IGRAPH Rcode</p>
+
+<pre><code class="r">someCODE
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;someCODE&#39; not found
+</code></pre>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
 
 <slide class="" id="slide-5" style="background:;">
   <hgroup>
-    <h2>Cypher</h2>
-  </hgroup>
-  <article data-timings="">
-    
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-6" style="background:;">
-  <hgroup>
     <h2>Using RNeo4j</h2>
   </hgroup>
   <article data-timings="">
     <pre><code class="r">devtools::install_github(&quot;nicolewhite/RNeo4j&quot;)
-library(RNeo4j)
+</code></pre>
+
+<pre><code>## Error in download(dest, src, auth): client error: (401) Unauthorized
+</code></pre>
+
+<pre><code class="r">library(RNeo4j)
 </code></pre>
 
 <h2>Connecting to DB</h2>
@@ -155,14 +164,8 @@ library(RNeo4j)
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=5 title='Cypher'>
+        data-slide=5 title='Using RNeo4j'>
          5
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=6 title='Using RNeo4j'>
-         6
       </a>
     </li>
   </ul>

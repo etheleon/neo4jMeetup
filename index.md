@@ -19,24 +19,37 @@ knit        : slidify::knit2slides
 
 ## Background
 
+* Neo4j is a noSQL database which models its data as a graph
+* latest version is 2.3.1
+
 ---
 ## Outline
 
-1. Edit YAML front matter
-2. Write using R Markdown
-3. Use an empty line followed by three dashes to separate slides!
+1. Using RNeo4j to connect with a hosted graphDB via Neo4j's REST API
+2. Executing cypher queries
+3. Using `IGRAPH` to plot and visualise data locally.
+4. Using `SHINY` and a `HTMLTOOLS` package `SIGMA` to interactively visualise graph data in a dashboard
 
 ---
 
 ## Why use NEO4J
 
+REASON: THE CYPHER QUERY LANGUAGE
+
 ---
 
 ## Why cypher
 
----
+comparison with IGRAPH Rcode
 
-## Cypher
+
+```r
+someCODE
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'someCODE' not found
+```
 
 ---
 
@@ -45,6 +58,13 @@ knit        : slidify::knit2slides
 
 ```r
 devtools::install_github("nicolewhite/RNeo4j")
+```
+
+```
+## Error in download(dest, src, auth): client error: (401) Unauthorized
+```
+
+```r
 library(RNeo4j)
 ```
 

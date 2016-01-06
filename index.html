@@ -134,6 +134,100 @@
   <!-- Presenter Notes -->
 </slide>
 
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Common Network analyses</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:48%;' class='centered'>
+  <p><img src="https://cdn.vectorstock.com/i/composite/19,21/flatnose-pliers-vector-1031921.jpg" alt="plyer"></p>
+
+</div>
+<div style='float:right;width:48%;'>
+  <h3>Extraction</h3>
+
+<ul>
+<li>subgraphs</li>
+<li>order</li>
+<li>cliches</li>
+</ul>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Common Network analyses</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:48%;' class='centered'>
+  <p><img src="https://cdn.vectorstock.com/i/composite/19,21/flatnose-pliers-vector-1031921.jpg" alt="plyer"></p>
+
+</div>
+<div style='float:right;width:48%;'>
+  <h3>Useful algorithms for multiple nodes</h3>
+
+<ul>
+<li>shortest path</li>
+<li>Lowest Common Ancestor</li>
+</ul>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Common Network analyses</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:48%;' class='centered'>
+  <p><img src="https://cdn.vectorstock.com/i/composite/19,21/flatnose-pliers-vector-1031921.jpg" alt="plyer"></p>
+
+</div>
+<div style='float:right;width:48%;'>
+  <h3>Node statistics</h3>
+
+<ul>
+<li>connectivity</li>
+<li>connectedness</li>
+</ul>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Writing queries</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="cypher">UNWIND
+    { kos } AS koss
+OPTIONAL MATCH
+    (ako:ko {ko : koss.ko})&lt;--(cpd:cpd)
+RETURN 
+    cpd.cpd        AS child,
+    ako.ko         AS parent,
+    ako.definition AS parentName,
+    ako.name       AS parentSym,
+    cpd.name       AS childName,
+    cpd.name       AS childSym
+</code></pre>
+
+<h2>Machine Learning using Graphs</h2>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
     <slide class="backdrop"></slide>
   </slides>
   <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
@@ -168,6 +262,30 @@
          5
       </a>
     </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Common Network analyses'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Common Network analyses'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Common Network analyses'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Writing queries'>
+         9
+      </a>
+    </li>
   </ul>
   </div>  <!--[if IE]>
     <script 
@@ -179,8 +297,17 @@
   <!-- Load Javascripts for Widgets -->
   
   <!-- LOAD HIGHLIGHTER JS FILES -->
-  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
+  <!--<script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>-->
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/highlight.min.js"></script>
+  <script type="text/javascript" src="libraries/highlighters/highlightjs-cypher/javascripts/cypher.js"></script>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/styles/default.min.css" rel="stylesheet" />
+  <link href="libraries/highlighters/highlightjs-cypher/css/cypher-highlighting.css" rel="stylesheet"/>
+  
+  <script type="text/javascript">
+  hljs.registerLanguage("cypher", cypher);
+  hljs.initHighlightingOnLoad();
+  </script> 
+  
   <!-- DONE LOADING HIGHLIGHTER JS FILES -->
    
   </html>

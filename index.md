@@ -68,7 +68,10 @@ devtools::install_github("nicolewhite/RNeo4j")
 library(RNeo4j)
 ```
 
+
+
 ## Connecting to DB
+
 
 
 
@@ -85,5 +88,74 @@ To disable authentication, change `dbms.security.auth_enabled` to `false` in `co
 ```
 dbms.security.auth_enabled=false
 ```
+
+--- &twocol
+
+## Common Network analyses
+
+*** =left
+
+![plyer](https://cdn.vectorstock.com/i/composite/19,21/flatnose-pliers-vector-1031921.jpg)
+
+*** =right
+
+### Extraction
+
+* subgraphs
+* order
+* cliches
+
+--- &twocol
+
+## Common Network analyses
+
+*** =left
+
+![plyer](https://cdn.vectorstock.com/i/composite/19,21/flatnose-pliers-vector-1031921.jpg)
+
+*** =right
+
+### Useful algorithms for multiple nodes
+
+* shortest path
+* Lowest Common Ancestor
+
+--- &twocol
+
+## Common Network analyses
+
+*** =left
+
+![plyer](https://cdn.vectorstock.com/i/composite/19,21/flatnose-pliers-vector-1031921.jpg)
+
+*** =right
+
+### Node statistics
+
+* connectivity
+* connectedness
+
+
+---
+
+## Writing queries
+
+
+
+```cypher
+UNWIND
+    { kos } AS koss
+OPTIONAL MATCH
+    (ako:ko {ko : koss.ko})<--(cpd:cpd)
+RETURN 
+    cpd.cpd        AS child,
+    ako.ko         AS parent,
+    ako.definition AS parentName,
+    ako.name       AS parentSym,
+    cpd.name       AS childName,
+    cpd.name       AS childSym
+```
+
+## Machine Learning using Graphs
 
 

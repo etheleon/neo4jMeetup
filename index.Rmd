@@ -536,7 +536,7 @@ nitroMetab = graph_from_data_frame(nitrogenMetabolism[,1:2], T, nodes)
 
 ## Extraction: Subgraph
 
-```{r fig.width=15, fig.height=15}
+```{r fig.width=15, fig.height=15, echo=FALSE}
 plot(nitroMetab)
 ```
 

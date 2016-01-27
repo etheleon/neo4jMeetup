@@ -482,11 +482,6 @@ nitroMetab = graph_from_data_frame(nitrogenMetabolism[,1:2], T, nodes)
 
 ## Extraction: Subgraph
 
-
-```r
-plot(nitroMetab)
-```
-
 ![plot of chunk unnamed-chunk-20](assets/fig/unnamed-chunk-20-1.png) 
 
 ---

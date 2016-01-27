@@ -514,11 +514,29 @@ plot(g, vertex.size=3, edge.arrow.size=0.5)
 
 <p><img src="assets/fig/unnamed-chunk-16-1.png" alt="plot of chunk unnamed-chunk-16"> </p>
 
+<h2>Case Study: Metabolic graph</h2>
+
+<ul>
+<li>Enzyme -&gt; Compound -&gt; Enzyme</li>
+</ul>
+
+<pre><code class="r">metabgraph &lt;- startGraph(&quot;http://metamaps.scelse.nus.edu.sg:7474/db/data/&quot;,
+            user = cred$user,
+            pass = cred$pass)
+</code></pre>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
 
 <slide class="" id="slide-20" style="background:;">
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
   <hgroup>
     <h2>Common Network analyses</h2>
   </hgroup>
@@ -537,60 +555,9 @@ plot(g, vertex.size=3, edge.arrow.size=0.5)
 <li>cliches</li>
 </ul>
 
-</div>
-  </article>
-  <!-- Presenter Notes -->
-</slide>
+<h2>Subgraph: 1 order neighbourhood from nodeS of interest</h2>
 
-<slide class="" id="slide-21" style="background:;">
-  <hgroup>
-    <h2>Common Network analyses</h2>
-  </hgroup>
-  <article data-timings="">
-    
-<div style='float:left;width:48%;' class='centered'>
-  <p><img src="https://cdn.vectorstock.com/i/composite/19,21/flatnose-pliers-vector-1031921.jpg" alt="plyer"></p>
-
-</div>
-<div style='float:right;width:48%;'>
-  <h3>Algorithms</h3>
-
-<ul>
-<li>shortest path</li>
-<li>Lowest Common Ancestor</li>
-<li>Centrality</li>
-<li>Betweeness</li>
-</ul>
-
-</div>
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-22" style="background:;">
-  <hgroup>
-    <h2>Case Study: Metabolic graph</h2>
-  </hgroup>
-  <article data-timings="">
-    <ul>
-<li>Enzyme -&gt; Compound -&gt; Enzyme</li>
-</ul>
-
-<pre><code class="r">metabgraph &lt;- startGraph(&quot;http://metamaps.scelse.nus.edu.sg:7474/db/data/&quot;,
-            user = cred$user,
-            pass = cred$pass)
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-23" style="background:;">
-  <hgroup>
-    <h2>Subgraph: 1 order neighbourhood from nodeS of interest</h2>
-  </hgroup>
-  <article data-timings="">
-    <pre><code class="cypher">UNWIND
+<pre><code class="cypher">UNWIND
     { kos } AS koss
 OPTIONAL MATCH
     (ako:ko {ko: koss.ko})&lt;--(cpd:cpd)
@@ -603,11 +570,12 @@ RETURN
     cpd.name       AS childSym
 </code></pre>
 
+</div>
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="sessionInfo" id="slide-24" style="background:;">
+<slide class="sessionInfo" id="slide-22" style="background:;">
   <hgroup>
     <h2>Subgraph: 1 order neighbourhood from nodeS of interest</h2>
   </hgroup>
@@ -635,7 +603,7 @@ nitroMetab = graph_from_data_frame(nitrogenMetabolism[,1:2], T, nodes)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-25" style="background:;">
+<slide class="" id="slide-23" style="background:;">
   <hgroup>
     <h2>Extraction: Subgraph</h2>
   </hgroup>
@@ -649,7 +617,7 @@ nitroMetab = graph_from_data_frame(nitrogenMetabolism[,1:2], T, nodes)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-26" style="background:;">
+<slide class="" id="slide-24" style="background:;">
   <hgroup>
     <h2>Cliches - weakly connected components</h2>
   </hgroup>
@@ -664,6 +632,38 @@ plot(nitrogenMetab, vertex.label=&quot;&quot;)
 
 <p><img src="assets/fig/cliches-1.png" alt="plot of chunk cliches"> </p>
 
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <hgroup>
+    <h2>Common Network analyses</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:48%;' class='centered'>
+  <p><img src="https://cdn.vectorstock.com/i/composite/19,21/flatnose-pliers-vector-1031921.jpg" alt="plyer"></p>
+
+</div>
+<div style='float:right;width:48%;'>
+  <h3>Algorithms</h3>
+
+<ul>
+<li>shortest path</li>
+<li>Lowest Common Ancestor</li>
+<li>Centrality</li>
+<li>Betweeness</li>
+</ul>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-26" style="background:;">
+  <article data-timings="">
+    
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -884,7 +884,7 @@ devtools::install_github(&quot;etheleon/metamaps&quot;)
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=20 title='Common Network analyses'>
+        data-slide=20 title='NA'>
          20
       </a>
     </li>
@@ -896,31 +896,31 @@ devtools::install_github(&quot;etheleon/metamaps&quot;)
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=22 title='Case Study: Metabolic graph'>
+        data-slide=22 title='Subgraph: 1 order neighbourhood from nodeS of interest'>
          22
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=23 title='Subgraph: 1 order neighbourhood from nodeS of interest'>
+        data-slide=23 title='Extraction: Subgraph'>
          23
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=24 title='Subgraph: 1 order neighbourhood from nodeS of interest'>
+        data-slide=24 title='Cliches - weakly connected components'>
          24
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=25 title='Extraction: Subgraph'>
+        data-slide=25 title='Common Network analyses'>
          25
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=26 title='Cliches - weakly connected components'>
+        data-slide=26 title='NA'>
          26
       </a>
     </li>

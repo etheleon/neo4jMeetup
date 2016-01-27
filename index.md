@@ -397,6 +397,23 @@ plot(g, vertex.size=3, edge.arrow.size=0.5)
 
 ![plot of chunk unnamed-chunk-16](assets/fig/unnamed-chunk-16-1.png) 
 
+
+
+## Case Study: Metabolic graph
+
+* Enzyme -> Compound -> Enzyme
+
+
+
+
+```r
+metabgraph <- startGraph("http://metamaps.scelse.nus.edu.sg:7474/db/data/",
+            user = cred$user,
+            pass = cred$pass)
+```
+
+--- 
+
 --- &twocol
 
 ## Common Network analyses
@@ -413,40 +430,6 @@ plot(g, vertex.size=3, edge.arrow.size=0.5)
 * components
 * cliches
 
---- &twocol
-
-## Common Network analyses
-
-*** =left
-
-![plyer](https://cdn.vectorstock.com/i/composite/19,21/flatnose-pliers-vector-1031921.jpg)
-
-*** =right
-
-### Algorithms
-
-
-* shortest path
-* Lowest Common Ancestor
-* Centrality
-* Betweeness
-
---- 
-
-## Case Study: Metabolic graph
-
-* Enzyme -> Compound -> Enzyme
-
-
-
-
-```r
-metabgraph <- startGraph("http://metamaps.scelse.nus.edu.sg:7474/db/data/",
-            user = cred$user,
-            pass = cred$pass)
-```
-
---- 
 
 ## Subgraph: 1 order neighbourhood from nodeS of interest
 
@@ -524,6 +507,28 @@ plot(nitrogenMetab, vertex.label="")
 ```
 
 ![plot of chunk cliches](assets/fig/cliches-1.png) 
+
+--- &twocol
+
+## Common Network analyses
+
+*** =left
+
+![plyer](https://cdn.vectorstock.com/i/composite/19,21/flatnose-pliers-vector-1031921.jpg)
+
+*** =right
+
+### Algorithms
+
+
+* shortest path
+* Lowest Common Ancestor
+* Centrality
+* Betweeness
+
+--- 
+
+
 
 ---
 

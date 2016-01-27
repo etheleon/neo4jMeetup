@@ -424,41 +424,7 @@ g = graph_from_data_frame(edgelist)
 plot(g, vertex.size=3, edge.arrow.size=0.5)
 ```
 
---- &twocol
 
-## Common Network analyses
-
-*** =left
-
-![plyer](https://cdn.vectorstock.com/i/composite/19,21/flatnose-pliers-vector-1031921.jpg)
-
-*** =right
-
-### Extraction
-
-* subgraphs
-* components
-* cliches
-
---- &twocol
-
-## Common Network analyses
-
-*** =left
-
-![plyer](https://cdn.vectorstock.com/i/composite/19,21/flatnose-pliers-vector-1031921.jpg)
-
-*** =right
-
-### Algorithms
-
-
-* shortest path
-* Lowest Common Ancestor
-* Centrality
-* Betweeness
-
---- 
 
 ## Case Study: Metabolic graph
 
@@ -485,6 +451,23 @@ metabgraph <- startGraph("http://metamaps.scelse.nus.edu.sg:7474/db/data/",
 ```
 
 --- 
+
+--- &twocol
+
+## Common Network analyses
+
+*** =left
+
+![plyer](https://cdn.vectorstock.com/i/composite/19,21/flatnose-pliers-vector-1031921.jpg)
+
+*** =right
+
+### Extraction
+
+* subgraphs
+* components
+* cliches
+
 
 ## Subgraph: 1 order neighbourhood from nodeS of interest
 
@@ -574,6 +557,28 @@ V(nitrogenMetab)$color = nitroMetab %>%
     as.factor
 plot(nitrogenMetab, vertex.label="")
 ```
+
+--- &twocol
+
+## Common Network analyses
+
+*** =left
+
+![plyer](https://cdn.vectorstock.com/i/composite/19,21/flatnose-pliers-vector-1031921.jpg)
+
+*** =right
+
+### Algorithms
+
+
+* shortest path
+* Lowest Common Ancestor
+* Centrality
+* Betweeness
+
+--- 
+
+
 
 ---
 

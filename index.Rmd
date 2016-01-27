@@ -424,7 +424,7 @@ g = graph_from_data_frame(edgelist)
 plot(g, vertex.size=3, edge.arrow.size=0.5)
 ```
 
-
+---
 
 ## Case Study: Metabolic graph
 
@@ -449,8 +449,6 @@ metabgraph <- startGraph("http://metamaps.scelse.nus.edu.sg:7474/db/data/",
             user = cred$user,
             pass = cred$pass)
 ```
-
---- 
 
 --- &twocol
 

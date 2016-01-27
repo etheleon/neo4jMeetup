@@ -397,7 +397,7 @@ plot(g, vertex.size=3, edge.arrow.size=0.5)
 
 ![plot of chunk unnamed-chunk-16](assets/fig/unnamed-chunk-16-1.png) 
 
-
+---
 
 ## Case Study: Metabolic graph
 
@@ -411,8 +411,6 @@ metabgraph <- startGraph("http://metamaps.scelse.nus.edu.sg:7474/db/data/",
             user = cred$user,
             pass = cred$pass)
 ```
-
---- 
 
 --- &twocol
 

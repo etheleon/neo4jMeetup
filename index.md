@@ -428,6 +428,7 @@ metabgraph <- startGraph("http://metamaps.scelse.nus.edu.sg:7474/db/data/",
 * components
 * cliches
 
+---
 
 ## Subgraph: 1 order neighbourhood from nodeS of interest
 

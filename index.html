@@ -555,9 +555,17 @@ plot(g, vertex.size=3, edge.arrow.size=0.5)
 <li>cliches</li>
 </ul>
 
-<h2>Subgraph: 1 order neighbourhood from nodeS of interest</h2>
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
 
-<pre><code class="cypher">UNWIND
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>Subgraph: 1 order neighbourhood from nodeS of interest</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="cypher">UNWIND
     { kos } AS koss
 OPTIONAL MATCH
     (ako:ko {ko: koss.ko})&lt;--(cpd:cpd)
@@ -570,12 +578,11 @@ RETURN
     cpd.name       AS childSym
 </code></pre>
 
-</div>
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="sessionInfo" id="slide-22" style="background:;">
+<slide class="sessionInfo" id="slide-23" style="background:;">
   <hgroup>
     <h2>Subgraph: 1 order neighbourhood from nodeS of interest</h2>
   </hgroup>
@@ -603,7 +610,7 @@ nitroMetab = graph_from_data_frame(nitrogenMetabolism[,1:2], T, nodes)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-23" style="background:;">
+<slide class="" id="slide-24" style="background:;">
   <hgroup>
     <h2>Extraction: Subgraph</h2>
   </hgroup>
@@ -617,7 +624,7 @@ nitroMetab = graph_from_data_frame(nitrogenMetabolism[,1:2], T, nodes)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-24" style="background:;">
+<slide class="" id="slide-25" style="background:;">
   <hgroup>
     <h2>Cliches - weakly connected components</h2>
   </hgroup>
@@ -636,7 +643,7 @@ plot(nitrogenMetab, vertex.label=&quot;&quot;)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-25" style="background:;">
+<slide class="" id="slide-26" style="background:;">
   <hgroup>
     <h2>Common Network analyses</h2>
   </hgroup>
@@ -661,14 +668,14 @@ plot(nitrogenMetab, vertex.label=&quot;&quot;)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-26" style="background:;">
+<slide class="" id="slide-27" style="background:;">
   <article data-timings="">
     
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-27" style="background:;">
+<slide class="" id="slide-28" style="background:;">
   <hgroup>
     <h2>Algorithms: Shortest path</h2>
   </hgroup>
@@ -697,7 +704,7 @@ SIMPLIFY = FALSE
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-28" style="background:;">
+<slide class="" id="slide-29" style="background:;">
   <hgroup>
     <h2>Algorithms: Shortest path</h2>
   </hgroup>
@@ -711,7 +718,7 @@ SIMPLIFY = FALSE
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-29" style="background:;">
+<slide class="" id="slide-30" style="background:;">
   <hgroup>
     <h2>DEMO - Interactive PLOT</h2>
   </hgroup>
@@ -727,7 +734,7 @@ devtools::install_github(&quot;etheleon/metamaps&quot;)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="sessionInfo" id="slide-30" style="background:;">
+<slide class="sessionInfo" id="slide-31" style="background:;">
   <hgroup>
     <h2>Session Information</h2>
   </hgroup>
@@ -902,31 +909,31 @@ devtools::install_github(&quot;etheleon/metamaps&quot;)
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=23 title='Extraction: Subgraph'>
+        data-slide=23 title='Subgraph: 1 order neighbourhood from nodeS of interest'>
          23
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=24 title='Cliches - weakly connected components'>
+        data-slide=24 title='Extraction: Subgraph'>
          24
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=25 title='Common Network analyses'>
+        data-slide=25 title='Cliches - weakly connected components'>
          25
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=26 title='NA'>
+        data-slide=26 title='Common Network analyses'>
          26
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=27 title='Algorithms: Shortest path'>
+        data-slide=27 title='NA'>
          27
       </a>
     </li>
@@ -938,14 +945,20 @@ devtools::install_github(&quot;etheleon/metamaps&quot;)
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=29 title='DEMO - Interactive PLOT'>
+        data-slide=29 title='Algorithms: Shortest path'>
          29
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=30 title='Session Information'>
+        data-slide=30 title='DEMO - Interactive PLOT'>
          30
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=31 title='Session Information'>
+         31
       </a>
     </li>
   </ul>

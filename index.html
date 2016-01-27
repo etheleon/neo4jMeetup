@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
     media="only screen and (max-device-width: 480px)" >
   <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
-  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/monokai.css" />
   <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
 
   
@@ -46,8 +46,8 @@
     <style>
 .sessionInfo code{
   font-size: 60%;
-   }
-
+}
+/* code to wrap properly */
 pre {
  white-space: pre-wrap;       /* css-3 */
  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
@@ -75,7 +75,7 @@ img {
 
 <ul>
 <li>Neo4j is a noSQL database which models its data as a graph</li>
-<li>latest version is 2.3.1</li>
+<li>latest version is 2.3.2</li>
 </ul>
 
   </article>
@@ -257,9 +257,7 @@ RETURN
 
 <h2>1. Connect with Neo4j</h2>
 
-<pre><code class="r">graph &lt;- startGraph(&quot;http://metamaps.scelse.nus.edu.sg:7474/db/data/&quot;,
-            user = cred$user,
-            pass = cred$pass)
+<pre><code class="r">graph2 = startGraph(&quot;http://localhost:7474/db/data/&quot;)
 </code></pre>
 
 <h3>Security</h3>
@@ -276,9 +274,19 @@ RETURN
     <h2>Cypher Functions 101</h2>
   </hgroup>
   <article data-timings="">
-    <h3>Finding a node</h3>
+    <h3>Important idoms</h3>
 
-<pre><code class="cypher">MATCH (label: {property: })
+<h4>1. Match</h4>
+
+<pre><code class="cypher">MATCH (label: {property: something}) -- (label2: {property: something})
+</code></pre>
+
+<h4>2. Collection</h4>
+
+<pre><code class="cypher">extract(x IN collection | x.property))
+</code></pre>
+
+<pre><code class="cypher">reduce(s = &quot;&quot;, x IN collection | s + x.property))
 </code></pre>
 
   </article>
@@ -287,114 +295,34 @@ RETURN
 
 <slide class="" id="slide-12" style="background:;">
   <hgroup>
-    <h2>2. Sending A query</h2>
+    <h2>Cypher Functions 101: Example</h2>
   </hgroup>
   <article data-timings="">
-    
-<div style='float:left;width:48%;' class='centered'>
-  <h3>Cypher Query</h3>
+    <p>Following code:</p>
+
+<ol>
+<li>Finds the following path: <code>(aa) --&gt; (bb) --&gt; (cc)</code> </li>
+<li>Sums and returns the value: <code>prop</code> belonging to all nodes connected nodes with <code>label3</code></li>
+</ol>
 
 <pre><code class="cypher">MATCH
-    (koi:ko {ko:&#39;ko:K00531&#39;})
+    (aa:label { prop: &quot;some prop&quot; }) --&gt; (bb:label2) --&gt; (cc:label3)
 RETURN
-    koi
+    reduce(sum = 0, property in collect(cc.prop) | sum + property) AS finalSum
 </code></pre>
 
-<ul>
-<li>Search for a node, <code>koi</code> 
+<p>more can be found <a href="http://neo4j.com/docs/2.1/cypher-refcard/">here</a></p>
 
-<ul>
-<li>with label <code>ko</code>, 
-
-<ul>
-<li>property <code>ko</code> of value <code>ko:K00531</code></li>
-</ul></li>
-</ul></li>
-</ul>
-
-</div>
-<div style='float:right;width:48%;'>
-  <h3>R code</h3>
-
-<pre><code class="r">nodeOfInterest &lt;-
-graph %&gt;% getNodes(
-    query = &quot;MATCH  (koi:ko {ko:&#39;ko:K00531&#39;})
-             RETURN koi&quot;
-    )
-</code></pre>
-
-<p>Node returned by the query is saved as a variable in R.</p>
-
-</div>
   </article>
   <!-- Presenter Notes -->
 </slide>
 
 <slide class="" id="slide-13" style="background:;">
   <hgroup>
-    <h2>2a. Cypher Query  - Returning as NODE &quot;object&quot;</h2>
+    <h2>NODE Creation</h2>
   </hgroup>
   <article data-timings="">
-    
-<div style='float:left;width:48%;' class='centered'>
-  <h3>Node Attributes</h3>
-
-<p><li>names</li><li>self</li><li>property</li><li>properties</li><li>labels</li><li>create_relationship</li><li>incoming_relationships</li><li>outgoing_relationships</li><li>class</li><li>username</li><li>password</li></p>
-
-<ul>
-<li><strong>Self</strong> stores the ID, thats how the functions deal with this node</li>
-</ul>
-
-</div>
-<div style='float:right;width:48%;'>
-  <h3>Node Data</h3>
-
-<pre><code>## List of 5
-##  $ : chr &quot;nitrogenase delta subunit [EC:1.18.6.1]&quot;
-##  $ : chr &quot;path:ko00625|path:ko00910|path:ko01100|path:ko01120&quot;
-##  $ : chr &quot;Chloroalkane and chloroalkene degradation|Nitrogen metabolism|Metabolic pathways|Microbial metabolism in diverse environments&quot;
-##  $ : chr &quot;anfG&quot;
-##  $ : chr &quot;ko:K00531&quot;
-</code></pre>
-
-</div>
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-14" style="background:;">
-  <hgroup>
-    <h2>2b. Cypher Query - Returning as data.frame</h2>
-  </hgroup>
-  <article data-timings="">
-    <p>If you know the property you&#39;re interested in, you could plan the query to return it as a data.frame</p>
-
-<pre><code class="r">df = graph %&gt;%
-cypher(
-&quot;MATCH
-    (koi:ko {ko:&#39;ko:K00531&#39;})
-RETURN
-    koi.ko,
-    koi.definition,
-    koi.name
-    &quot;)
-</code></pre>
-
-<pre><code>##      koi.ko                          koi.definition koi.name
-## 1 ko:K00531 nitrogenase delta subunit [EC:1.18.6.1]     anfG
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-15" style="background:;">
-  <hgroup>
-    <h2>Creating a node</h2>
-  </hgroup>
-  <article data-timings="">
-    <pre><code class="r">graph2 = startGraph(&quot;http://localhost:7474/db/data/&quot;)
-bob = graph2 %&gt;%
+    <pre><code class="r">bob = graph2 %&gt;%
         createNode(&quot;Person&quot;, 
                    name = &quot;Bob&quot;, 
                    age = 24, 
@@ -410,9 +338,9 @@ bob = graph2 %&gt;%
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-16" style="background:;">
+<slide class="" id="slide-14" style="background:;">
   <hgroup>
-    <h2>Edge creation</h2>
+    <h2>EDGE Creation</h2>
   </hgroup>
   <article data-timings="">
     <pre><code class="r">alice   = createNode(graph2, &quot;Person&quot;, name = &quot;Alice&quot;)
@@ -425,52 +353,179 @@ createRel(bob, &quot;KNOWS&quot;, charles, since = 2000, through = &quot;Work&qu
 createRel(alice, &quot;KNOWS&quot;, charles, list(since = 2001, through = &quot;School&quot;))
 </code></pre>
 
+<div class="centered">
+<img src="./assets/img/edges.png" height="20%", width="60%">
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>2. Sending A Cypher Query</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:48%;' class='centered'>
+  <h3>Retrieve NODE</h3>
+
+<pre><code class="cypher">MATCH
+    (noi:Person {name:&#39;Bob&#39;})
+RETURN
+    noi
+</code></pre>
+
+<ul>
+<li>Search for a node, <code>noi</code> 
+
+<ul>
+<li>with label <code>Person</code>, 
+
+<ul>
+<li>property <code>name</code> of value <code>Bob</code></li>
+</ul></li>
+</ul></li>
+</ul>
+
+</div>
+<div style='float:right;width:48%;'>
+  <h3>R code</h3>
+
+<pre><code class="r">nodeOfInterest &lt;- graph2 %&gt;% 
+getNodes(
+&quot;
+MATCH
+    (noi:Person {name:&#39;Bob&#39;})
+RETURN
+    noi&quot;)
+</code></pre>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>2a. Cypher Query</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Node returned by the query can be saved as a variable in R.</p>
+
+<div style='float:left;width:48%;' class='centered'>
+  <h3>Node Attributes</h3>
+
+<p><li>names</li><li>self</li><li>property</li><li>properties</li><li>labels</li><li>create_relationship</li><li>incoming_relationships</li><li>outgoing_relationships</li><li>class</li></p>
+
+<ul>
+<li><strong>Self</strong> stores the ID, thats how the functions deal with this node</li>
+</ul>
+
+</div>
+<div style='float:right;width:48%;'>
+  <h3>Node Data</h3>
+
+<pre><code>## List of 3
+##  $ : chr &quot;Bob&quot;
+##  $ : int 24
+##  $ : chr [1:2] &quot;Jenny&quot; &quot;Larry&quot;
+</code></pre>
+
+</div>
   </article>
   <!-- Presenter Notes -->
 </slide>
 
 <slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>2b. Cypher Query - Returning as data.frame</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>If you know the property you&#39;re interested in, you could plan the query to return it as a data.frame</p>
+
+<pre><code class="r">df = graph2 %&gt;%
+cypher(
+&quot;MATCH 
+    (bob:Person {name:&#39;Bob&#39;})
+RETURN
+    bob.name, 
+    bob.age
+&quot;)
+</code></pre>
+
+<pre><code>##   bob.name bob.age
+## 1      Bob      24
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="sessionInfo" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Visualising subgraph in IGRAPH</h2>
+  </hgroup>
   <article data-timings="">
     
 <div style='float:left;width:48%;' class='centered'>
-  <h2>Visualising in Igraph</h2>
+  <p>Using cypher get the subgraph which you&#39;re interested in and return as an edge list.</p>
 
-<p>Using cypher get the subgraph which you&#39;re interested in and return as an edge list.</p>
-
-<pre><code class="r">edgelist = graph %&gt;% cypher(
-&quot;
-UNWIND
+<pre><code class="cypher">UNWIND
     {names} AS namelist
 MATCH
     (p:Person {name:namelist}) -- (connection:Person)
 RETURN
     p.name,
     connection.name
-&quot;, list(names = c(&quot;Alice&quot;, &quot;Bob&quot;, &quot;Charles&quot;))
+</code></pre>
+
+</div>
+<div style='float:right;width:48%;'>
+  <pre><code class="r">#Edgelist extraction
+edgelist = graph2 %&gt;% cypher(query
+, list(names = c(&quot;Alice&quot;, &quot;Bob&quot;, &quot;Charles&quot;))
 )
+edgelist %&lt;&gt;% setNames(c(&quot;from&quot;, &quot;to&quot;))
 </code></pre>
 
-<pre><code>## Error in UseMethod(&quot;cypher&quot;): no applicable method for &#39;cypher&#39; applied to an object of class &quot;function&quot;
+<pre><code>##    from      to
+## 1 Alice     Bob
+## 2 Alice Charles
+## 3 Alice     Bob
+## 4 Alice Charles
+## 5 Alice     Bob
+## 6 Alice Charles
 </code></pre>
 
-<pre><code class="r">edgelist %&lt;&gt;% setNames(c(&quot;from&quot;, &quot;to&quot;))
-edgelist
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Convert to igraph object and plot</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">g = graph_from_data_frame(edgelist)
+plot(g, vertex.size=3, edge.arrow.size=0.5)
 </code></pre>
 
-<pre><code>##       from      to
-## 1    Alice Charles
-## 2    Alice Charles
-## 3    Alice Charles
-## 4    Alice Charles
-## 5    Alice Charles
-## 6    Alice Charles
-## 7  Charles   Alice
-## 8  Charles   Alice
-## 9  Charles   Alice
-## 10 Charles   Alice
-## 11 Charles   Alice
-## 12 Charles   Alice
-</code></pre>
+<p><img src="assets/fig/unnamed-chunk-16-1.png" alt="plot of chunk unnamed-chunk-16"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Common Network analyses</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:48%;' class='centered'>
+  <p><img src="https://cdn.vectorstock.com/i/composite/19,21/flatnose-pliers-vector-1031921.jpg" alt="plyer"></p>
 
 </div>
 <div style='float:right;width:48%;'>
@@ -478,7 +533,7 @@ edgelist
 
 <ul>
 <li>subgraphs</li>
-<li>order</li>
+<li>components</li>
 <li>cliches</li>
 </ul>
 
@@ -487,7 +542,7 @@ edgelist
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-18" style="background:;">
+<slide class="" id="slide-21" style="background:;">
   <hgroup>
     <h2>Common Network analyses</h2>
   </hgroup>
@@ -512,32 +567,27 @@ edgelist
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-19" style="background:;">
-  <article data-timings="">
-    
-<div style='float:left;width:48%;' class='centered'>
-  
-</div>
-<div style='float:right;width:48%;'>
-  
-</div>
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-20" style="background:;">
+<slide class="" id="slide-22" style="background:;">
   <hgroup>
-    <h2>Metabolic graph</h2>
+    <h2>Case Study: Metabolic graph</h2>
   </hgroup>
   <article data-timings="">
-    
+    <ul>
+<li>Enzyme -&gt; Compound -&gt; Enzyme</li>
+</ul>
+
+<pre><code class="r">metabgraph &lt;- startGraph(&quot;http://metamaps.scelse.nus.edu.sg:7474/db/data/&quot;,
+            user = cred$user,
+            pass = cred$pass)
+</code></pre>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-21" style="background:;">
+<slide class="" id="slide-23" style="background:;">
   <hgroup>
-    <h2>Example Query</h2>
+    <h2>Subgraph: 1 order neighbourhood from nodeS of interest</h2>
   </hgroup>
   <article data-timings="">
     <pre><code class="cypher">UNWIND
@@ -557,7 +607,130 @@ RETURN
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="sessionInfo" id="slide-22" style="background:;">
+<slide class="sessionInfo" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>Subgraph: 1 order neighbourhood from nodeS of interest</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">nitrogenMetabolism = metabgraph %&gt;% 
+cypher(query,list(kos = koi))
+</code></pre>
+
+<pre><code>child    parent                               parentName  parentSym       childName        childSym
+1: cpd:C00011 ko:K18246        carbonic anhydrase 4 [EC:4.2.1.1]        CA4            CO2;            CO2;
+2: cpd:C00011 ko:K18245        carbonic anhydrase 2 [EC:4.2.1.1]        CA2            CO2;            CO2;
+</code></pre>
+
+<p>Make data.frames:
+Vertices and Edgelist</p>
+
+<pre><code class="r">nodes = rbind(
+    setNames(unique(select(nitrogenMetabolism, parent, parentName)), c(&quot;id&quot;, &quot;name&quot;)), 
+    setNames(unique(select(nitrogenMetabolism, child, childName)), c(&quot;id&quot;, &quot;name&quot;))
+)
+nitroMetab = graph_from_data_frame(nitrogenMetabolism[,1:2], T, nodes)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <hgroup>
+    <h2>Extraction: Subgraph</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">plot(nitroMetab)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-20-1.png" alt="plot of chunk unnamed-chunk-20"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-26" style="background:;">
+  <hgroup>
+    <h2>Cliches - weakly connected components</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">V(nitrogenMetab)$color = nitroMetab %&gt;%
+    components(&quot;weak&quot;)           %$%
+    membership                   %&gt;%
+    unname                       %&gt;%
+    as.factor
+plot(nitrogenMetab, vertex.label=&quot;&quot;)
+</code></pre>
+
+<p><img src="assets/fig/cliches-1.png" alt="plot of chunk cliches"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-27" style="background:;">
+  <hgroup>
+    <h2>Algorithms: Shortest path</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">noi = c(&quot;Formate&quot;, &quot;HCO3&quot;)                      %&gt;%
+lapply(function(x){
+   which(grepl(x, V(nitrogenMetab)$Definition))
+})
+shortpath = nitrogenMetab                       %&gt;%
+shortest_paths(noi[[1]], noi[[2]], mode=&quot;all&quot;)  %$%
+vpath[[1]]                                      %&gt;%
+as.integer
+</code></pre>
+
+<pre><code class="r">mapply(function(one, two){
+    E(nitrogenMetab)[one %--% two]$color &lt;&lt;- &quot;red&quot;
+    E(nitrogenMetab)[one %--% two]$width &lt;&lt;- 5
+},
+one = shortpath %&gt;% head(n=-1),
+two = shortpath %&gt;% tail(n=-1),
+SIMPLIFY = FALSE
+) %&gt;% invisible
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-28" style="background:;">
+  <hgroup>
+    <h2>Algorithms: Shortest path</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">plot(nitrogenMetab, vertex.label=&quot;&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-25-1.png" alt="plot of chunk unnamed-chunk-25"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-29" style="background:;">
+  <hgroup>
+    <h2>DEMO - Interactive PLOT</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">#Requires two libraries.
+devtools::install_github(&quot;etheleon/sigma&quot;) #Modified version of the original sigma0
+devtools::install_github(&quot;etheleon/metamaps&quot;)
+</code></pre>
+
+<p><img src="./assets/img/app.png" height="30%", width="80%"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="sessionInfo" id="slide-30" style="background:;">
+  <hgroup>
+    <h2>Session Information</h2>
+  </hgroup>
   <article data-timings="">
     <pre><code>## R version 3.1.1 (2014-07-10)
 ## Platform: x86_64-apple-darwin13.1.0 (64-bit)
@@ -570,22 +743,21 @@ RETURN
 ## 
 ## other attached packages:
 ##  [1] XML_3.98-1.3           shiny_0.12.2           magrittr_1.5          
-##  [4] dplyr_0.4.1            MetamapsDB_0.0.2       slidifyLibraries_0.3.1
-##  [7] slidify_0.4.5          igraph_1.0.1           visNetwork_0.1.0      
-## [10] digest_0.6.8           RNeo4j_1.6.1           setwidth_1.0-4        
+##  [4] dplyr_0.4.1            MetamapsDB_0.0.2       igraph_1.0.1          
+##  [7] visNetwork_0.1.0       digest_0.6.8           RNeo4j_1.6.1          
+## [10] slidifyLibraries_0.3.1 slidify_0.4.5          setwidth_1.0-4        
 ## [13] colorout_1.0-3        
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] assertthat_0.1    codetools_0.2-14  curl_0.9.3       
-##  [4] DBI_0.3.1         devtools_1.9.0    evaluate_0.7.2   
-##  [7] formatR_1.2       htmltools_0.2.6   htmlwidgets_0.5.1
-## [10] httpuv_1.3.3      httr_1.0.0        jsonlite_0.9.16  
-## [13] knitr_1.10.5      markdown_0.7.7    memoise_0.2.1    
-## [16] mime_0.3          parallel_3.1.1    R6_2.1.1         
-## [19] Rcpp_0.12.0       rjson_0.2.15      RJSONIO_1.3-0    
-## [22] rstudioapi_0.3.1  sigma_1.0         stringi_0.5-5    
-## [25] stringr_1.0.0     tools_3.1.1       whisker_0.3-2    
-## [28] xtable_1.7-4      yaml_2.1.13
+##  [4] DBI_0.3.1         evaluate_0.7.2    formatR_1.2      
+##  [7] htmltools_0.2.6   htmlwidgets_0.5.1 httpuv_1.3.3     
+## [10] httr_1.0.0        jsonlite_0.9.16   knitr_1.10.5     
+## [13] markdown_0.7.7    mime_0.3          parallel_3.1.1   
+## [16] R6_2.1.1          Rcpp_0.12.0       rjson_0.2.15     
+## [19] RJSONIO_1.3-0     sigma_1.0         stringi_0.5-5    
+## [22] stringr_1.0.0     tools_3.1.1       whisker_0.3-2    
+## [25] xtable_1.7-4      yaml_2.1.13
 </code></pre>
 
   </article>
@@ -664,68 +836,116 @@ RETURN
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=12 title='2. Sending A query'>
+        data-slide=12 title='Cypher Functions 101: Example'>
          12
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=13 title='2a. Cypher Query  - Returning as NODE &quot;object&quot;'>
+        data-slide=13 title='NODE Creation'>
          13
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=14 title='2b. Cypher Query - Returning as data.frame'>
+        data-slide=14 title='EDGE Creation'>
          14
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=15 title='Creating a node'>
+        data-slide=15 title='2. Sending A Cypher Query'>
          15
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=16 title='Edge creation'>
+        data-slide=16 title='2a. Cypher Query'>
          16
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=17 title='NA'>
+        data-slide=17 title='2b. Cypher Query - Returning as data.frame'>
          17
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=18 title='Common Network analyses'>
+        data-slide=18 title='Visualising subgraph in IGRAPH'>
          18
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=19 title='NA'>
+        data-slide=19 title='Convert to igraph object and plot'>
          19
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=20 title='Metabolic graph'>
+        data-slide=20 title='Common Network analyses'>
          20
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=21 title='Example Query'>
+        data-slide=21 title='Common Network analyses'>
          21
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=22 title='NA'>
+        data-slide=22 title='Case Study: Metabolic graph'>
          22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Subgraph: 1 order neighbourhood from nodeS of interest'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='Subgraph: 1 order neighbourhood from nodeS of interest'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='Extraction: Subgraph'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='Cliches - weakly connected components'>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title='Algorithms: Shortest path'>
+         27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title='Algorithms: Shortest path'>
+         28
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=29 title='DEMO - Interactive PLOT'>
+         29
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=30 title='Session Information'>
+         30
       </a>
     </li>
   </ul>
@@ -739,10 +959,11 @@ RETURN
   <!-- Load Javascripts for Widgets -->
   
   <!-- LOAD HIGHLIGHTER JS FILES -->
-  <!--<script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>-->
-  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/highlight.min.js"></script>
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/languages/r.min.js"></script>
+  <!--<link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/default.min.css" rel="stylesheet" />-->
+  <link rel="stylesheet" href="highlighters/highlight.js/css/monokai.css" />
   <script type="text/javascript" src="libraries/highlighters/highlightjs-cypher/javascripts/cypher.js"></script>
-  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/styles/default.min.css" rel="stylesheet" />
   <link href="libraries/highlighters/highlightjs-cypher/css/cypher-highlighting.css" rel="stylesheet"/>
   
   <script type="text/javascript">

@@ -5,17 +5,22 @@ author      : Wesley GOI
 job         : Graph Enthusiast
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
-hitheme     : tomorrow      # 
+hitheme     : monokai
 mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
 widgets    : []
 ---
 
+
+
+
+
+
 <style>
 .sessionInfo code{
   font-size: 60%;
-   }
-
+}
+/* code to wrap properly */
 pre {
  white-space: pre-wrap;       /* css-3 */
  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
@@ -42,7 +47,7 @@ img {
 ## Background
 
 * Neo4j is a noSQL database which models its data as a graph
-* latest version is 2.3.1
+* latest version is 2.3.2
 
 ---
 ## Outline
@@ -162,131 +167,66 @@ RETURN
 library(RNeo4j)
 ```
 
-
-
 ## 1. Connect with Neo4j
 
 
-
-
-
-
 ```r
-graph <- startGraph("http://metamaps.scelse.nus.edu.sg:7474/db/data/",
-            user = cred$user,
-            pass = cred$pass)
+graph2 = startGraph("http://localhost:7474/db/data/")
 ```
+
+
 
 ### Security
 
 Set the following if you wish to DISABLE user password login:
 `dbms.security.auth_enabled=false` to in `conf/neo4j-server.properties`.
 
-
 ---
 
 ## Cypher Functions 101
 
-### Finding a node
+### Important idoms
+
+#### 1. Match
 
 ```cypher
-MATCH (label: {property: })
+MATCH (label: {property: something}) -- (label2: {property: something})
 ```
 
+#### 2. Collection
 
---- &twocol
+```cypher
+extract(x IN collection | x.property))
+```
 
-## 2. Sending A query
+```cypher
+reduce(s = "", x IN collection | s + x.property))
+```
 
-*** =left
+---
 
-### Cypher Query
+## Cypher Functions 101: Example
+
+Following code:
+
+1. Finds the following path: `(aa) --> (bb) --> (cc)` 
+2. Sums and returns the value: `prop` belonging to all nodes connected nodes with `label3`
 
 ```cypher
 MATCH
-    (koi:ko {ko:'ko:K00531'})
+    (aa:label { prop: "some prop" }) --> (bb:label2) --> (cc:label3)
 RETURN
-    koi
+    reduce(sum = 0, property in collect(cc.prop) | sum + property) AS finalSum
 ```
 
-* Search for a node, `koi` 
-    * with label `ko`, 
-        * property `ko` of value `ko:K00531`
-
-*** =right
-
-### R code
-
-
-```r
-nodeOfInterest <-
-graph %>% getNodes(
-    query = "MATCH  (koi:ko {ko:'ko:K00531'})
-             RETURN koi"
-    )
-```
-
-Node returned by the query is saved as a variable in R.
-
---- &twocol
-
-## 2a. Cypher Query  - Returning as NODE "object"
-
-*** =left
-### Node Attributes
-
-<li>names</li><li>self</li><li>property</li><li>properties</li><li>labels</li><li>create_relationship</li><li>incoming_relationships</li><li>outgoing_relationships</li><li>class</li><li>username</li><li>password</li>
-
-* **Self** stores the ID, thats how the functions deal with this node
-
-*** =right
-
-### Node Data
-
-
-```
-## List of 5
-##  $ : chr "nitrogenase delta subunit [EC:1.18.6.1]"
-##  $ : chr "path:ko00625|path:ko00910|path:ko01100|path:ko01120"
-##  $ : chr "Chloroalkane and chloroalkene degradation|Nitrogen metabolism|Metabolic pathways|Microbial metabolism in diverse environments"
-##  $ : chr "anfG"
-##  $ : chr "ko:K00531"
-```
+more can be found [here](http://neo4j.com/docs/2.1/cypher-refcard/)
 
 ---
 
-## 2b. Cypher Query - Returning as data.frame
-
-If you know the property you're interested in, you could plan the query to return it as a data.frame
+## NODE Creation
 
 
 ```r
-df = graph %>%
-cypher(
-"MATCH
-    (koi:ko {ko:'ko:K00531'})
-RETURN
-    koi.ko,
-    koi.definition,
-    koi.name
-    ")
-```
-
-
-```
-##      koi.ko                          koi.definition koi.name
-## 1 ko:K00531 nitrogenase delta subunit [EC:1.18.6.1]     anfG
-```
-
----
-
-## Creating a node
-
-
-
-
-```r
-graph2 = startGraph("http://localhost:7474/db/data/")
 bob = graph2 %>%
         createNode("Person", 
                    name = "Bob", 
@@ -300,7 +240,7 @@ bob = graph2 %>%
 
 ---
 
-## Edge creation
+## EDGE Creation
 
 
 ```r
@@ -314,18 +254,106 @@ createRel(bob, "KNOWS", charles, since = 2000, through = "Work")
 createRel(alice, "KNOWS", charles, list(since = 2001, through = "School"))
 ```
 
+<div class="centered">
+<img src="./assets/img/edges.png" height="20%", width="60%">
+</div>
+
+
 --- &twocol
+
+## 2. Sending A Cypher Query
 
 *** =left
 
-## Visualising in Igraph
+### Retrieve NODE
+
+```cypher
+MATCH
+    (noi:Person {name:'Bob'})
+RETURN
+    noi
+```
+
+* Search for a node, `noi` 
+    * with label `Person`, 
+        * property `name` of value `Bob`
+
+*** =right
+
+### R code
+
+
+```r
+nodeOfInterest <- graph2 %>% 
+getNodes(
+"
+MATCH
+    (noi:Person {name:'Bob'})
+RETURN
+    noi")
+```
+
+--- &twocol
+
+## 2a. Cypher Query
+
+Node returned by the query can be saved as a variable in R.
+
+*** =left
+
+### Node Attributes
+
+<li>names</li><li>self</li><li>property</li><li>properties</li><li>labels</li><li>create_relationship</li><li>incoming_relationships</li><li>outgoing_relationships</li><li>class</li>
+
+* **Self** stores the ID, thats how the functions deal with this node
+
+*** =right
+
+### Node Data
+
+
+```
+## List of 3
+##  $ : chr "Bob"
+##  $ : int 24
+##  $ : chr [1:2] "Jenny" "Larry"
+```
+
+---
+
+## 2b. Cypher Query - Returning as data.frame
+
+If you know the property you're interested in, you could plan the query to return it as a data.frame
+
+
+```r
+df = graph2 %>%
+cypher(
+"MATCH 
+    (bob:Person {name:'Bob'})
+RETURN
+    bob.name, 
+    bob.age
+")
+```
+
+
+```
+##   bob.name bob.age
+## 1      Bob      24
+```
+
+--- &twocol .sessionInfo 
+
+## Visualising subgraph in IGRAPH
+
+*** =left
 
 Using cypher get the subgraph which you're interested in and return as an edge list.
 
 
-```r
-edgelist = graph %>% cypher(
-"
+
+```cypher
 UNWIND
     {names} AS namelist
 MATCH
@@ -333,38 +361,33 @@ MATCH
 RETURN
     p.name,
     connection.name
-", list(names = c("Alice", "Bob", "Charles"))
-)
 ```
 
-```
-## Error in UseMethod("cypher"): no applicable method for 'cypher' applied to an object of class "function"
-```
+*** =right
+
 
 ```r
+#Edgelist extraction
+edgelist = graph2 %>% cypher(query
+, list(names = c("Alice", "Bob", "Charles"))
+)
 edgelist %<>% setNames(c("from", "to"))
-edgelist
 ```
 
+
 ```
-##       from      to
-## 1    Alice Charles
-## 2    Alice Charles
-## 3    Alice Charles
-## 4    Alice Charles
-## 5    Alice Charles
-## 6    Alice Charles
-## 7  Charles   Alice
-## 8  Charles   Alice
-## 9  Charles   Alice
-## 10 Charles   Alice
-## 11 Charles   Alice
-## 12 Charles   Alice
+##    from      to
+## 1 Alice     Bob
+## 2 Alice Charles
+## 3 Alice     Bob
+## 4 Alice Charles
+## 5 Alice     Bob
+## 6 Alice Charles
 ```
 
-*** =left
+---
 
-Convert to igraph object and plot
+## Convert to igraph object and plot
 
 
 ```r
@@ -372,7 +395,8 @@ g = graph_from_data_frame(edgelist)
 plot(g, vertex.size=3, edge.arrow.size=0.5)
 ```
 
-![plot of chunk unnamed-chunk-15](assets/fig/unnamed-chunk-15-1.png) 
+![plot of chunk unnamed-chunk-16](assets/fig/unnamed-chunk-16-1.png) 
+
 --- &twocol
 
 ## Common Network analyses
@@ -386,7 +410,7 @@ plot(g, vertex.size=3, edge.arrow.size=0.5)
 ### Extraction
 
 * subgraphs
-* order
+* components
 * cliches
 
 --- &twocol
@@ -407,16 +431,25 @@ plot(g, vertex.size=3, edge.arrow.size=0.5)
 * Centrality
 * Betweeness
 
---- &twocol
+--- 
+
+## Case Study: Metabolic graph
+
+* Enzyme -> Compound -> Enzyme
 
 
----
 
-## Metabolic graph
 
----
+```r
+metabgraph <- startGraph("http://metamaps.scelse.nus.edu.sg:7474/db/data/",
+            user = cred$user,
+            pass = cred$pass)
+```
 
-## Example Query
+--- 
+
+## Subgraph: 1 order neighbourhood from nodeS of interest
+
 
 ```cypher
 UNWIND
@@ -434,6 +467,124 @@ RETURN
 
 --- .sessionInfo
 
+## Subgraph: 1 order neighbourhood from nodeS of interest
+
+
+
+
+
+```r
+nitrogenMetabolism = metabgraph %>% 
+cypher(query,list(kos = koi))
+```
+
+```
+child    parent                               parentName  parentSym       childName        childSym
+1: cpd:C00011 ko:K18246        carbonic anhydrase 4 [EC:4.2.1.1]        CA4            CO2;            CO2;
+2: cpd:C00011 ko:K18245        carbonic anhydrase 2 [EC:4.2.1.1]        CA2            CO2;            CO2;
+```
+
+Make data.frames:
+Vertices and Edgelist
+
+
+```r
+nodes = rbind(
+    setNames(unique(select(nitrogenMetabolism, parent, parentName)), c("id", "name")), 
+    setNames(unique(select(nitrogenMetabolism, child, childName)), c("id", "name"))
+)
+nitroMetab = graph_from_data_frame(nitrogenMetabolism[,1:2], T, nodes)
+```
+
+---
+
+## Extraction: Subgraph
+
+
+```r
+plot(nitroMetab)
+```
+
+![plot of chunk unnamed-chunk-20](assets/fig/unnamed-chunk-20-1.png) 
+
+---
+
+## Cliches - weakly connected components
+
+
+
+
+```r
+V(nitrogenMetab)$color = nitroMetab %>%
+    components("weak")           %$%
+    membership                   %>%
+    unname                       %>%
+    as.factor
+plot(nitrogenMetab, vertex.label="")
+```
+
+![plot of chunk cliches](assets/fig/cliches-1.png) 
+
+---
+
+## Algorithms: Shortest path
+
+
+```r
+noi = c("Formate", "HCO3")                      %>%
+lapply(function(x){
+   which(grepl(x, V(nitrogenMetab)$Definition))
+})
+shortpath = nitrogenMetab                       %>%
+shortest_paths(noi[[1]], noi[[2]], mode="all")  %$%
+vpath[[1]]                                      %>%
+as.integer
+```
+
+
+
+
+```r
+mapply(function(one, two){
+    E(nitrogenMetab)[one %--% two]$color <<- "red"
+    E(nitrogenMetab)[one %--% two]$width <<- 5
+},
+one = shortpath %>% head(n=-1),
+two = shortpath %>% tail(n=-1),
+SIMPLIFY = FALSE
+) %>% invisible
+```
+
+---
+
+## Algorithms: Shortest path
+
+
+```r
+plot(nitrogenMetab, vertex.label="")
+```
+
+![plot of chunk unnamed-chunk-25](assets/fig/unnamed-chunk-25-1.png) 
+
+---
+
+
+## DEMO - Interactive PLOT
+
+
+
+```r
+#Requires two libraries.
+devtools::install_github("etheleon/sigma") #Modified version of the original sigma0
+devtools::install_github("etheleon/metamaps")
+```
+
+<img src="./assets/img/app.png" height="30%", width="80%">
+
+--- .sessionInfo
+
+## Session Information
+
 
 ```
 ## R version 3.1.1 (2014-07-10)
@@ -447,20 +598,19 @@ RETURN
 ## 
 ## other attached packages:
 ##  [1] XML_3.98-1.3           shiny_0.12.2           magrittr_1.5          
-##  [4] dplyr_0.4.1            MetamapsDB_0.0.2       slidifyLibraries_0.3.1
-##  [7] slidify_0.4.5          igraph_1.0.1           visNetwork_0.1.0      
-## [10] digest_0.6.8           RNeo4j_1.6.1           setwidth_1.0-4        
+##  [4] dplyr_0.4.1            MetamapsDB_0.0.2       igraph_1.0.1          
+##  [7] visNetwork_0.1.0       digest_0.6.8           RNeo4j_1.6.1          
+## [10] slidifyLibraries_0.3.1 slidify_0.4.5          setwidth_1.0-4        
 ## [13] colorout_1.0-3        
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] assertthat_0.1    codetools_0.2-14  curl_0.9.3       
-##  [4] DBI_0.3.1         devtools_1.9.0    evaluate_0.7.2   
-##  [7] formatR_1.2       htmltools_0.2.6   htmlwidgets_0.5.1
-## [10] httpuv_1.3.3      httr_1.0.0        jsonlite_0.9.16  
-## [13] knitr_1.10.5      markdown_0.7.7    memoise_0.2.1    
-## [16] mime_0.3          parallel_3.1.1    R6_2.1.1         
-## [19] Rcpp_0.12.0       rjson_0.2.15      RJSONIO_1.3-0    
-## [22] rstudioapi_0.3.1  sigma_1.0         stringi_0.5-5    
-## [25] stringr_1.0.0     tools_3.1.1       whisker_0.3-2    
-## [28] xtable_1.7-4      yaml_2.1.13
+##  [4] DBI_0.3.1         evaluate_0.7.2    formatR_1.2      
+##  [7] htmltools_0.2.6   htmlwidgets_0.5.1 httpuv_1.3.3     
+## [10] httr_1.0.0        jsonlite_0.9.16   knitr_1.10.5     
+## [13] markdown_0.7.7    mime_0.3          parallel_3.1.1   
+## [16] R6_2.1.1          Rcpp_0.12.0       rjson_0.2.15     
+## [19] RJSONIO_1.3-0     sigma_1.0         stringi_0.5-5    
+## [22] stringr_1.0.0     tools_3.1.1       whisker_0.3-2    
+## [25] xtable_1.7-4      yaml_2.1.13
 ```

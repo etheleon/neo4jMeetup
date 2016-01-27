@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.4, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="446.354px" height="333.854px" viewBox="0 0 446.354 333.854" enable-background="new 0 0 446.354 333.854"
+	 xml:space="preserve">
+<g id="Layer_1">
+	<circle fill="none" stroke="#E30613" stroke-width="8" stroke-miterlimit="10" cx="95.323" cy="82.821" r="62.24"/>
+	<circle fill="#FFFFFF" stroke="#3C63AD" stroke-width="8" stroke-miterlimit="10" cx="358.993" cy="82.821" r="62.239"/>
+	<g>
+		<g>
+			
+				<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="175.521" y1="82.821" x2="261.888" y2="82.821"/>
+			<g>
+				<path d="M273.958,82.821c-5.68,2.107-12.727,5.703-17.095,9.512l3.44-9.512l-3.44-9.51
+					C261.232,77.12,268.279,80.715,273.958,82.821z"/>
+			</g>
+		</g>
+	</g>
+	<text transform="matrix(1 0 0 1 76.5625 96.8745)" font-family="'MyriadPro-Regular'" font-size="60">A</text>
+	<text transform="matrix(1 0 0 1 339.8335 96.8745)" font-family="'MyriadPro-Regular'" font-size="60">B</text>
+	<text transform="matrix(1 0 0 1 40.1035 321.354)"><tspan x="0" y="0" font-family="'MyriadPro-Regular'" font-size="18">(A:</tspan><tspan x="19.854" y="0" fill="#EECCE3" font-family="'MyriadPro-Regular'" font-size="18">girl</tspan><tspan x="44.261" y="0" font-family="'MyriadPro-Regular'" font-size="18"> {</tspan><tspan x="53.189" y="0" fill="#E73C1E" font-family="'MyriadPro-Regular'" font-size="18">name</tspan><tspan x="95.884" y="0" font-family="'MyriadPro-Regular'" font-size="18">: ally}</tspan><tspan x="134.188" y="0" font-family="'MyriadPro-Regular'" font-size="18">) -[:likes]-&gt; (B:</tspan><tspan x="234.301" y="0" fill="#3C63AD" font-family="'MyriadPro-Regular'" font-size="18">boy</tspan><tspan x="262.903" y="0" fill="#010202" font-family="'MyriadPro-Regular'" font-size="18">{</tspan><tspan x="268.015" y="0" fill="#E73C1E" font-family="'MyriadPro-Regular'" font-size="18">name</tspan><tspan x="310.71" y="0" fill="#010202" font-family="'MyriadPro-Regular'" font-size="18">: joshua}</tspan><tspan x="373.332" y="0" font-family="'MyriadPro-Regular'" font-size="18">)</tspan></text>
+	<circle fill="none" stroke="#000000" stroke-width="8" stroke-miterlimit="10" cx="95.323" cy="82.821" r="62.24"/>
+	<text transform="matrix(1 0 0 1 57.8125 113.5415)"><tspan x="0" y="0" fill="#E73C1E" font-family="'MyriadPro-Regular'" font-size="18">name</tspan><tspan x="42.696" y="0" font-family="'MyriadPro-Regular'" font-size="18">: ally </tspan></text>
+	<circle fill="#FFFFFF" stroke="#3C63AD" stroke-width="8" stroke-miterlimit="10" cx="358.993" cy="219.096" r="62.239"/>
+	<text transform="matrix(1 0 0 1 339.8335 233.1499)" font-family="'MyriadPro-Regular'" font-size="60">B</text>
+	<g>
+		<path fill="none" d="M278.125,110.417"/>
+	</g>
+	<g>
+		<path fill="none" d="M177.083,110.417"/>
+	</g>
+	<g>
+		<g>
+			
+				<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="175.521" y1="107.292" x2="265.264" y2="193.711"/>
+			<g>
+				<path d="M273.958,202.083c-5.553-2.422-13.123-4.72-18.911-5.006l9.075-4.466l4.119-9.236
+					C268.746,189.149,271.328,196.627,273.958,202.083z"/>
+			</g>
+		</g>
+	</g>
+	<text transform="matrix(1 0 0 1 351.0425 122.9165)" font-family="'MyriadPro-Regular'" font-size="18">??</text>
+	<text transform="matrix(1 0 0 1 351.0425 260.604)" font-family="'MyriadPro-Regular'" font-size="18">??</text>
+</g>
+<g id="Layer_2">
+	<circle fill="none" stroke="#EECCE3" stroke-width="8" stroke-miterlimit="10" cx="95.323" cy="82.821" r="62.24"/>
+	<text transform="matrix(1 0 0 1 197.9165 77.083)" font-family="'MyriadPro-Regular'" font-size="18">likes</text>
+	<text transform="matrix(0.6751 0.7377 -0.7377 0.6751 219.4399 135.3638)" font-family="'MyriadPro-Regular'" font-size="18">likes</text>
+</g>
+</svg>

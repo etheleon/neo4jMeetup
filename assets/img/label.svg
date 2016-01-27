@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.4, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="446.354px" height="333.854px" viewBox="0 0 446.354 333.854" enable-background="new 0 0 446.354 333.854"
+	 xml:space="preserve">
+<g id="Layer_1">
+	<circle fill="none" stroke="#E30613" stroke-width="8" stroke-miterlimit="10" cx="95.323" cy="82.821" r="62.24"/>
+	<circle fill="#FFFFFF" stroke="#3C63AD" stroke-width="8" stroke-miterlimit="10" cx="358.993" cy="82.821" r="62.239"/>
+	<g>
+		<g>
+			
+				<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="175.521" y1="82.821" x2="261.888" y2="82.821"/>
+			<g>
+				<path d="M273.958,82.821c-5.68,2.107-12.727,5.703-17.095,9.512l3.44-9.512l-3.44-9.51
+					C261.232,77.12,268.279,80.715,273.958,82.821z"/>
+			</g>
+		</g>
+	</g>
+	<text transform="matrix(1 0 0 1 76.5625 96.8745)" font-family="'MyriadPro-Regular'" font-size="60">A</text>
+	<text transform="matrix(1 0 0 1 339.8335 96.8745)" font-family="'MyriadPro-Regular'" font-size="60">B</text>
+	<text transform="matrix(1 0 0 1 48.437 271.8745)"><tspan x="0" y="0" font-family="'MyriadPro-Regular'" font-size="48">(A:</tspan><tspan x="52.943" y="0" fill="#EECCE3" font-family="'MyriadPro-Regular'" font-size="48">girl</tspan><tspan x="118.03" y="0" font-family="'MyriadPro-Regular'" font-size="48">) --&gt; (B:</tspan><tspan x="259.674" y="0" fill="#3C63AD" font-family="'MyriadPro-Regular'" font-size="48">boy</tspan><tspan x="335.945" y="0" font-family="'MyriadPro-Regular'" font-size="48">)</tspan></text>
+	<circle fill="none" stroke="#000000" stroke-width="8" stroke-miterlimit="10" cx="95.323" cy="82.821" r="62.24"/>
+</g>
+<g id="Layer_2">
+	<circle fill="none" stroke="#EECCE3" stroke-width="8" stroke-miterlimit="10" cx="95.323" cy="82.821" r="62.24"/>
+</g>
+</svg>
